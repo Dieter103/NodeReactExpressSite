@@ -19,10 +19,13 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./ListItems";
-// import Chart from "./Chart";
-// import Deposits from "./Deposits";
-// import Orders from "./Orders";
+import MainListItems from "./ListItems";
+import { HashRouter as Router, Route } from "react-router-dom";
+import Home from "./Home";
+import Projects from "./Projects";
+import Test from "./Test";
+import Form from "./Form";
+import Card from "./Card";
 
 function Copyright() {
   return (
@@ -136,82 +139,97 @@ export default function Dashboard(props) {
       props.isAuth = false;
     }
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const fixedHeightPaper = clsx(classes.paper);
+  const cardCss = {};
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(
-              classes.menuButton,
-              open && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            Dashboard
-          </Typography>
-          <Button onClick={handleSignOut}>Sign Out</Button>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
-      </Drawer>
-      <main className={classes.content}>
-        {/*<div className={classes.appBarSpacer} />*/}
-        {/*<Container maxWidth="lg" className={classes.container}>*/}
-        {/*  <Grid container spacing={3}>*/}
-        {/*    /!* Chart *!/*/}
-        {/*    <Grid item xs={12} md={8} lg={9}>*/}
-        {/*      <Paper className={fixedHeightPaper}>/!*<Chart />*!/</Paper>*/}
-        {/*    </Grid>*/}
-        {/*    /!* Recent Deposits *!/*/}
-        {/*    <Grid item xs={12} md={4} lg={3}>*/}
-        {/*      <Paper className={fixedHeightPaper}>/!*<Deposits />*!/</Paper>*/}
-        {/*    </Grid>*/}
-        {/*    /!* Recent Orders *!/*/}
-        {/*    <Grid item xs={12}>*/}
-        {/*      <Paper className={classes.paper}>/!*<Orders />*!/</Paper>*/}
-        {/*    </Grid>*/}
-        {/*  </Grid>*/}
-        {/*</Container>*/}
-        {/*<Copyright />*/}
-      </main>
-    </div>
+    <Router>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="absolute"
+          className={clsx(classes.appBar, open && classes.appBarShift)}
+        >
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(
+                classes.menuButton,
+                open && classes.menuButtonHidden
+              )}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+            >
+              Dashboard
+            </Typography>
+            <Button onClick={handleSignOut}>Sign Out</Button>
+            <IconButton color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <MainListItems />
+          </List>
+          <Divider />
+          {/*<List>{secondaryListItems}</List>*/}
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={3}>
+              {/* Chart */}
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Paper className={fixedHeightPaper}>
+                  <Route path="/" component={Home} />
+                  <Route path="/projects" component={Projects} />
+                  <Route path="/test" component={Test} />
+                  <Route path="/form" component={Form} />
+                  <Route path="/card" component={Card} />
+                  {/*<Chart />*/}
+                </Paper>
+              </Grid>
+              {/* Recent Deposits */}
+              {/*<Grid item xs={12} md={4} lg={3}>*/}
+              {/*  <Paper className={fixedHeightPaper}>/!*<Deposits />*!/</Paper>*/}
+              {/*</Grid>*/}
+              {/* Recent Orders */}
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>{/*<Orders />*/}</Paper>
+              </Grid>
+            </Grid>
+          </Container>
+
+          <Copyright />
+        </main>
+      </div>
+    </Router>
   );
 }

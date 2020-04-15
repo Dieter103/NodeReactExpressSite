@@ -9,62 +9,88 @@ import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import { NavLink as RouterLink } from "react-router-dom";
 
-export const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
-  </div>
-);
+function MainListItems(props) {
+  //Creating a router link
+  const NewRouterLink = React.forwardRef((props, ref) => (
+    <RouterLink innerRef={ref} {...props} />
+  ));
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
-  </div>
-);
+  //Creating a ListItem using RouterLink
+  const ListItemLink = props => {
+    return <ListItem button component={NewRouterLink} {...props} />;
+  };
+
+  return (
+    <div>
+      <ListItemLink to="/">
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItemLink>
+      <ListItemLink to="/projects">
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Projects" />
+      </ListItemLink>
+      <ListItemLink to="/test">
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Customers" />
+      </ListItemLink>
+      <ListItemLink to="/form">
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Forms" />
+      </ListItemLink>
+      <ListItemLink to="/card">
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Integrations" />
+      </ListItemLink>
+    </div>
+  );
+}
+
+export default MainListItems;
+
+// export const mainListItems = (
+//   <div>
+//     <ListItem button>
+//       <ListItemIcon>
+//         <DashboardIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Dashboard" />
+//     </ListItem>
+//     <ListItem button>
+//       <ListItemIcon>
+//         <ShoppingCartIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Orders" />
+//     </ListItem>
+//     <ListItem button>
+//       <ListItemIcon>
+//         <PeopleIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Customers" />
+//     </ListItem>
+//     <ListItem button>
+//       <ListItemIcon>
+//         <BarChartIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Reports" />
+//     </ListItem>
+//     <ListItem button>
+//       <ListItemIcon>
+//         <LayersIcon />
+//       </ListItemIcon>
+//       <ListItemText primary="Integrations" />
+//     </ListItem>
+//   </div>
+// );

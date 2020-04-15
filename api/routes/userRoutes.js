@@ -5,13 +5,14 @@ const ini = require("ini");
 const fs = require("fs");
 const upload = multer();
 let usersController = require("../controllers/usersController");
+let pageController = require("../controllers/pageController");
 
 router.post("/login", upload.none(), async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
   let token = await usersController.login(username, password);
 
-  if (token) {
+  if (!token) {
     //set cookie to httpOnly
     const cookieOptions = { httpOnly: true, expires: 0 };
 
@@ -22,8 +23,8 @@ router.post("/login", upload.none(), async (req, res) => {
     //TODO: don't return the token
     await res.json({
       success: true,
-      msg: "Authentication successful!",
-      token: token
+      msg: "Authentication successful!"
+      // token: token
     });
   } else {
     res.clearCookie("userJwt");
@@ -57,6 +58,13 @@ router.get("/validate", async (req, res) => {
   let tokenInformation = await usersController.validate(token);
   if (tokenInformation) await res.json(tokenInformation);
   else res.status(400);
+});
+
+router.get("/page/:href", async (req, res) => {
+  console.log("getting");
+  let html = await pageController.getPage("../src/html/projectsPage.mustache");
+  // console.log(html);
+  res.send(html);
 });
 
 module.exports = router;

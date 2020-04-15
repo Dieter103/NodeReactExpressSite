@@ -43,6 +43,13 @@ let usersController = {
       username
     );
 
+    let testUpperCase = await conn.query(
+      "SELECT * FROM vid_Demo.Project",
+      username
+    );
+
+    console.log(testUpperCase);
+
     // no users found
     if (res.length === 0) {
       return false;

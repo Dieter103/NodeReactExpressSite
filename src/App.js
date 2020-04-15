@@ -12,7 +12,6 @@ const theme = createMuiTheme({
 });
 
 const App = props => {
-  let auth = false;
   const [state, setState] = useState({
     apiResponse: "",
     id: 1,
@@ -27,7 +26,7 @@ const App = props => {
   const callAPI = async () => {
     console.log("calling!!!");
     let token = "";
-    await fetch("/users/validate", {
+    fetch("/users/validate", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -58,7 +57,8 @@ const App = props => {
 
   const setPage = () => {
     let component = "";
-    if (state.loggedIn) {
+    //TODO: fix the user db
+    if (!state.loggedIn) {
       component = (
         <ThemeProvider theme={theme}>
           <Dashboard isAuth={isAuth} />
